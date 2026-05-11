@@ -55,7 +55,7 @@ AI-Driven-COVID19-Analytics/
 │   ├── preprocessing.py
 │   ├── feature_engineering.py
 │   ├── modeling.py
-│   ├── forecasting.py
+│   ├── evaluation.py
 │   └── visualization.py
 │
 ├── visualizations/
