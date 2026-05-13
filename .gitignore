@@ -37,3 +37,6 @@ env/
 # Pytest cache
 
 .pytest_cache/
+
+# Deployment logs
+logs-*.txt
