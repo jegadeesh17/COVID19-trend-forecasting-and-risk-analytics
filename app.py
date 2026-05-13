@@ -90,9 +90,7 @@ def main():
         # Display metric block array
         display_kpi_row(
             total_cases=latest['total_cases'],
-            daily_cases=latest['new_cases'],
-            mortality_pct=mortality,
-            growth_pct=growth_pct
+            mortality_pct=mortality
         )
         
         st.divider()
