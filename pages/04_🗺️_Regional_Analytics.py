@@ -47,7 +47,7 @@ scatter_fig.update_layout(
     plot_bgcolor='rgba(0,0,0,0)',
     margin=dict(l=10, r=10, t=40, b=10)
 )
-st.plotly_chart(scatter_fig, use_container_width=True)
+st.plotly_chart(scatter_fig, width='stretch')
 
 st.divider()
 
@@ -70,4 +70,4 @@ heatmap_fig.update_layout(
     plot_bgcolor='rgba(0,0,0,0)',
     margin=dict(l=10, r=10, t=40, b=10)
 )
-st.plotly_chart(heatmap_fig, use_container_width=True)
+st.plotly_chart(heatmap_fig, width='stretch')

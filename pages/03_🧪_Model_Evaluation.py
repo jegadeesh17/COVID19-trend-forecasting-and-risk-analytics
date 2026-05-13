@@ -16,7 +16,7 @@ st.subheader("📊 Comparative Validation Statistics")
 # Display metrics overview cleanly
 st.dataframe(
     results_df[['Model', 'R2 Score', 'CV R2 Mean', 'RMSE', 'MAE']],
-    use_container_width=True,
+    width='stretch',
     hide_index=True
 )
 
@@ -25,7 +25,7 @@ st.divider()
 # High-fidelity visual bar rendering
 st.plotly_chart(
     render_model_comparison(results_df),
-    use_container_width=True
+    width='stretch'
 )
 
 # Render feature importance tracking
@@ -53,6 +53,6 @@ if "XGBoost" in trained_models:
             plot_bgcolor='rgba(0,0,0,0)',
             margin=dict(l=10, r=10, t=40, b=10)
         )
-        st.plotly_chart(fig, use_container_width=True)
+        st.plotly_chart(fig, width='stretch')
 else:
     st.info("Feature importance diagnostics require successful XGBoost fitting.")

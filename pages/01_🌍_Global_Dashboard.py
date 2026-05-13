@@ -49,12 +49,12 @@ st.divider()
 chart_title = f"Historical Infection Wave Dynamics ({selected_country})"
 st.plotly_chart(
     render_trend_chart(view_df, title=chart_title), 
-    use_container_width=True
+    width='stretch'
 )
 
 # Render auxiliary data context table
 with st.expander("📁 View Comprehensive Granular Datasets"):
     st.dataframe(
         view_df.sort_values('date', ascending=False).head(100),
-        use_container_width=True
+        width='stretch'
     )

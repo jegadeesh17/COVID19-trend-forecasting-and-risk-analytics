@@ -64,7 +64,7 @@ st.plotly_chart(
         forecast_values=forecast_res['Predicted_New_Cases'],
         model_name=selected_model
     ),
-    use_container_width=True
+    width='stretch'
 )
 
 # Render side-by-side metric breakdown
@@ -91,4 +91,4 @@ with c3:
     )
 
 with st.expander("📄 Export Future Trajectory Records (CSV / Dataframe)"):
-    st.dataframe(forecast_res, use_container_width=True)
+    st.dataframe(forecast_res, width='stretch')
