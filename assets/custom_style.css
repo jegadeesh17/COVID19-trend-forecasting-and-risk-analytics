@@ -1,0 +1,33 @@
+/* Institutional Streamlit Custom Styling Tokens */
+
+/* Metric Cards Custom Styling */
+div[data-testid="stMetricContainer"] {
+    background-color: #1e293b;
+    border: 1px solid #334155;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+div[data-testid="stMetricContainer"]:hover {
+    transform: translateY(-2px);
+    border-color: #3b82f6;
+}
+
+/* Adjust application padding */
+div.block-container {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    max-width: 95rem;
+}
+
+/* Hide header transparency if standard */
+header {
+    background: transparent !important;
+}
+
+/* Styled section dividers */
+hr {
+    border-color: #334155 !important;
+}

@@ -234,10 +234,20 @@ Healthcare analysts and policymakers can use this platform to:
 
 ---
 
+### **Interactive Application Deployment**
+
+The project features a fully institutionalized, multi-page **Streamlit Web Application** designed with glassmorphism CSS tokens, session state continuity, and high-fidelity interactive Plotly charts.
+
+#### **To Launch the Platform Locally:**
+```powershell
+python -m streamlit run ".\COVID-19 Predictive Analytics System\app.py"
+```
+
+---
+
 ### **Future Improvements**
 
 * Real-time COVID API integration
-* Interactive Streamlit dashboard deployment
 * Deep learning-based forecasting using LSTM
 * Geospatial outbreak mapping
 * Live healthcare analytics monitoring

@@ -10,3 +10,4 @@ jupyter
 notebook
 scipy
 statsmodels
+streamlit
