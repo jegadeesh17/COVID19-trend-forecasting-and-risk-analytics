@@ -6,29 +6,30 @@ from src.preprocessing import preprocess_data
 from src.feature_engineering import create_features
 from src.modeling import train_models
 
-@st.cache_data(show_spinner="Ingesting and stabilizing time-series datasets...")
+@st.cache_data(show_spinner="Loading and preparing global health records...")
 def load_and_prep_data():
-    """Load raw dataset, execute interpolation preprocessing, and extract advanced temporal lags."""
+    """Load data bundle, interpolate missing points, and construct dynamic lag features."""
     if not os.path.exists(DATA_PATH):
-        raise FileNotFoundError(f"Required global data bundle not found at path: {DATA_PATH}")
+        raise FileNotFoundError(f"Data file missing at requested path: {DATA_PATH}")
         
     raw_df = pd.read_csv(DATA_PATH)
     processed_df = preprocess_data(raw_df)
     engineered_df = create_features(processed_df)
     return engineered_df
 
-@st.cache_resource(show_spinner="Training ensemble regressors (RandomForest, XGBoost) over sampled timeline...")
+@st.cache_resource(show_spinner="Fitting optimized ML algorithms on focused historical trends...")
 def load_cached_models():
-    """Train machine learning pipelines on robust historical records and persist memory structures."""
+    """Train regression pipelines over a highly lightweight subset to prevent cloud memory limits."""
     df = load_and_prep_data()
     
     # Extract feature inputs and target vector cleanly
     X = df[FEATURES]
     y = df[TARGET]
     
-    # Downsample institutional data volume to preserve real-time Streamlit memory allocations
-    if len(df) > 50000:
-        sampled = df.sample(50000, random_state=42)
+    # Strictly limit sample volume to 5,000 rows to guarantee instant Streamlit Cloud execution speeds
+    # and avoid multi-threaded out-of-memory kernel freezes during cross-validation loops.
+    if len(df) > 5000:
+        sampled = df.sample(5000, random_state=42)
         X = sampled[FEATURES]
         y = sampled[TARGET]
         
