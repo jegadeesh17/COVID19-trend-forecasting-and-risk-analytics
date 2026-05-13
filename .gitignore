@@ -1,41 +1,33 @@
 # Python cache
-
-**pycache**/
+__pycache__/
 *.pyc
 
 # Jupyter
-
 .ipynb_checkpoints/
 
 # Virtual environments
-
 venv/
 env/
 
 # Dataset files
-
 *.csv
 *.xlsx
+!data/compact.csv.gz
 
 # Model files
-
 *.pkl
 *.joblib
 
 # Environment variables
-
 .env
 
 # Mac/Linux system files
-
 .DS_Store
 
 # VS Code
-
 .vscode/
 
 # Pytest cache
-
 .pytest_cache/
 
 # Deployment logs
