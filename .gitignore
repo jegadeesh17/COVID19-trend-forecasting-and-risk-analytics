@@ -17,6 +17,7 @@ env/
 # Model files
 *.pkl
 *.joblib
+!models/*.joblib
 
 # Environment variables
 .env
