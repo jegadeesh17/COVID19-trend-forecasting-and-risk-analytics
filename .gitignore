@@ -33,3 +33,11 @@ env/
 
 # Deployment logs
 logs-*.txt
+# Logs
+logs-*.txt
+
+# Documents
+*.docx
+*.pdf
+*.doc
+*.wpf
