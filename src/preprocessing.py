@@ -17,10 +17,13 @@ def preprocess_data(df):
     df[numeric_cols] = df.groupby('country')[numeric_cols].transform(lambda x: x.interpolate().ffill().bfill().fillna(0))
     
     # Outlier handling (IQR) for key target variables
+    # Guard: skip clipping if IQR == 0 (constant column) to avoid wiping all values to zero,
+    # which would make correlation undefined (NaN) and appear blank in heatmaps.
     for col in ['new_cases', 'new_deaths']:
         Q1 = df[col].quantile(0.25)
         Q3 = df[col].quantile(0.75)
         IQR = Q3 - Q1
-        df[col] = df[col].clip(lower=Q1 - 1.5 * IQR, upper=Q3 + 1.5 * IQR)
+        if IQR > 0:
+            df[col] = df[col].clip(lower=Q1 - 1.5 * IQR, upper=Q3 + 1.5 * IQR)
         
     return df
