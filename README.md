@@ -4,72 +4,75 @@
 
 ### **Project Overview**
 
-The COVID-19 pandemic created unprecedented challenges in monitoring infection spread, predicting outbreak trends, and understanding regional risk behavior. This project leverages machine learning, time-series analytics, and data visualization techniques to build an AI-driven COVID-19 predictive analytics system.
+The COVID-19 pandemic created unprecedented challenges in monitoring infection spread, predicting outbreak trends, and understanding regional risk behavior. This project builds an AI-driven predictive analytics platform using machine learning, time-series analytics, and data visualization to analyze the global pandemic's trajectory.
 
-The platform analyzes historical pandemic data, performs trend forecasting, identifies critical outbreak patterns, and generates analytical insights for decision-making and healthcare monitoring. By integrating machine learning with statistical forecasting, the system enables data-driven pandemic intelligence and risk assessment.
+The system processes historical COVID-19 data, engineers advanced temporal features, forecasts future case trends using ensemble models, and visualizes outbreak patterns — all delivered through a multi-page Streamlit dashboard with glassmorphism UI aesthetics and high-fidelity Plotly charts.
 
 ---
 
 ### **Key Features**
 
-* **Pandemic Trend Analytics:** Analyzes COVID-19 infection, recovery, and mortality trends.
-* **Machine Learning Forecasting:** Predicts future case trends using regression and ensemble models.
-* **Advanced Feature Engineering:** Generates rolling averages, growth rates, and lag-based forecasting features.
-* **Interactive Data Visualization:** Produces trend graphs, heatmaps, and correlation analysis dashboards.
-* **Model Performance Evaluation:** Compares multiple ML models using standard evaluation metrics.
-* **Automated Analytics Pipeline:** Supports preprocessing, forecasting, evaluation, and visualization workflows.
+* **Pandemic Trend Analytics:** Analyzes COVID-19 infection, recovery, and mortality trends over time.
+* **Machine Learning Forecasting:** Predicts future case counts using Linear Regression, Random Forest, and XGBoost.
+* **Advanced Feature Engineering:** Rolling averages, growth rates, mortality rates, recovery rates, and lag-based forecasting features.
+* **Interactive Data Visualization:** Trend graphs, correlation heatmaps, Prediction vs Actual charts, and model comparison dashboards.
+* **Modular ML Pipeline:** Separate preprocessing, feature engineering, modeling, evaluation, and visualization scripts.
+* **Multi-Page Streamlit App:** Glassmorphism-styled dashboard with session state continuity across analytics views.
+* **Model Performance Evaluation:** Compares all models using R², RMSE, and MAE metrics.
+* **Automated Analytics Pipeline:** End-to-end preprocessing, forecasting, evaluation, and visualization workflows.
 
 ---
 
 ### **Dataset**
 
 * **Source:** Global COVID-19 Dataset
-* **Coverage:** Worldwide pandemic statistics
+* **Coverage:** Worldwide pandemic statistics by country and date
 * **Data Type:** Time-series healthcare and epidemiological data
 
 #### **Key Features**
 
-* Confirmed cases
-* Death counts
+* Confirmed cases count
+* Death counts and mortality rates
 * Recovery statistics
-* Daily growth trends
-* Mortality rates
+* Daily growth rate trends
 * Regional outbreak information
-* Date-wise pandemic observations
+* Date-wise pandemic observations (time-series)
 
 ---
 
 ### **Project Structure**
 
 ```bash
-AI-Driven-COVID19-Analytics/
+COVID-19-Predictive-Analytics-System/
 │
 ├── data/
-│   ├── raw/
-│   └── processed/
+│   ├── raw/                        # Original COVID-19 datasets
+│   └── processed/                  # Cleaned and feature-engineered data
 │
-├── notebooks/
-│   └── covid_analysis.ipynb
+├── models/                         # Saved trained ML models
+│
+├── notebooks/                      # Jupyter notebooks for EDA and modeling
+│
+├── reports/                        # Analytical reports
+│
+├── visualizations/                 # Output charts and plots
+│
+├── components/
+│   ├── cards.py                    # KPI card UI components
+│   ├── sidebar.py                  # Sidebar filter components
+│   └── visualizations.py          # Plotly chart components
 │
 ├── src/
-│   ├── preprocessing.py
-│   ├── feature_engineering.py
-│   ├── modeling.py
-│   ├── evaluation.py
-│   └── visualization.py
+│   ├── preprocessing.py            # Data cleaning and time-series formatting
+│   ├── feature_engineering.py      # Rolling averages, growth rates, lag features
+│   ├── modeling.py                 # Model training pipeline
+│   ├── evaluation.py               # Model evaluation metrics
+│   └── visualization.py           # Static visualization scripts
 │
-├── visualizations/
-│   ├── trend_analysis.png
-│   ├── correlation_heatmap.png
-│   ├── model_comparison.png
-│   └── forecast_results.png
-│
-├── results/
-│   ├── predictions.csv
-│   └── model_metrics.csv
-│
-├── requirements.txt
-├── .gitignore
+├── app.py                          # Multi-page Streamlit dashboard application
+├── config.py                       # Application configuration
+├── services.py                     # Data service layer
+├── requirements.txt               # Python dependencies
 └── README.md
 ```
 
@@ -79,53 +82,42 @@ AI-Driven-COVID19-Analytics/
 
 ### **1. Data Preprocessing**
 
-* Cleans missing and inconsistent records
-* Converts date columns into time-series format
+* Cleans missing and inconsistent pandemic records
+* Converts date columns into proper time-series format
 * Removes duplicates and outliers
-* Standardizes numerical features
+* Standardizes numerical features for model training
 
 ---
 
 ### **2. Feature Engineering**
 
-The system creates advanced analytical features:
+The system creates advanced temporal analytical features:
 
-| Feature             | Purpose                              |
-| ------------------- | ------------------------------------ |
-| `daily_growth_rate` | Tracks infection growth trends       |
-| `rolling_avg_cases` | Smooths short-term fluctuations      |
-| `mortality_rate`    | Measures outbreak severity           |
-| `recovery_rate`     | Evaluates healthcare recovery trends |
-| `lag_features`      | Supports future trend forecasting    |
-
----
-
-### **3. Exploratory Data Analysis**
-
-Performs:
-
-* Correlation analysis
-* Trend visualization
-* Outbreak pattern identification
-* Time-series behavior analysis
-* Regional comparison studies
+| Feature              | Purpose                                    |
+| -------------------- | ------------------------------------------ |
+| `daily_growth_rate`  | Tracks infection growth trends             |
+| `rolling_avg_cases`  | Smooths short-term fluctuations            |
+| `mortality_rate`     | Measures outbreak severity                 |
+| `recovery_rate`      | Evaluates healthcare recovery trends       |
+| `lag_7`              | 7-day lagged cases for trend forecasting   |
+| `lag_14`             | 14-day lagged cases for trend forecasting  |
 
 ---
 
-### **4. Machine Learning Models**
+### **3. Machine Learning Forecasting**
 
-#### **Models Used**
+#### Models Used
 
-* Linear Regression
-* Random Forest Regressor
-* XGBoost Regressor
+* **Linear Regression** — Baseline trend forecasting
+* **Random Forest Regressor** — Non-linear pattern capture
+* **XGBoost Regressor** — High-accuracy ensemble forecasting
 
-#### **Why These Models?**
+```python
+from sklearn.ensemble import RandomForestRegressor
 
-* Capture nonlinear pandemic trends
-* Handle large tabular datasets effectively
-* Improve forecasting accuracy
-* Enable comparative performance evaluation
+model = RandomForestRegressor(random_state=42)
+model.fit(X_train, y_train)
+```
 
 ---
 
@@ -139,41 +131,37 @@ Performs:
 
 ---
 
-### **5. Forecasting System**
+### **4. Forecasting Capabilities**
 
-The forecasting pipeline predicts future COVID-19 trends using engineered time-series features.
-
-#### Forecasting Capabilities:
-
-* Future case prediction
-* Trend continuation analysis
-* Moving average forecasting
+* Future case prediction using trained ensemble models
+* Moving average trend continuation analysis
 * Outbreak surge identification
+* Multi-step ahead forecasting using lag features
 
 ---
 
-### **6. Data Visualization**
+### **Interactive Application Deployment**
 
-The project generates analytical visualizations including:
+The project features a fully institutionalized, multi-page **Streamlit Web Application** designed with glassmorphism CSS tokens, session state continuity, and high-fidelity interactive Plotly charts.
 
-* COVID trend analysis graphs
-* Correlation heatmaps
-* Prediction vs Actual plots
-* Model comparison charts
-* Forecast trend visualizations
+#### **To Launch the Platform Locally:**
+```powershell
+python -m streamlit run ".\COVID-19 Predictive Analytics System\app.py"
+```
 
 ---
 
 ### **Technology Stack**
 
-| Category             | Tools                       |
-| -------------------- | --------------------------- |
-| Programming          | Python                      |
-| Data Processing      | Pandas, NumPy               |
-| Machine Learning     | Scikit-learn, XGBoost       |
-| Visualization        | Matplotlib, Seaborn, Plotly |
-| Forecasting          | Time-Series Analytics       |
-| Notebook Environment | Jupyter Notebook            |
+| Category             | Tools                          |
+| -------------------- | ------------------------------ |
+| Programming          | Python                         |
+| Data Processing      | Pandas, NumPy                  |
+| Machine Learning     | Scikit-learn, XGBoost          |
+| Visualization        | Matplotlib, Seaborn, Plotly    |
+| Forecasting          | Time-Series Analytics          |
+| Notebook Environment | Jupyter Notebook               |
+| Web Framework        | Streamlit                      |
 
 ---
 
@@ -182,9 +170,9 @@ The project generates analytical visualizations including:
 ### **1. Clone Repository**
 
 ```bash
-git clone https://github.com/yourusername/AI-Driven-COVID19-Analytics.git
+git clone https://github.com/jegadeesh17/COVID19-Trend-Forecasting-and-Risk-Analytics.git
 
-cd AI-Driven-COVID19-Analytics
+cd COVID-19-Predictive-Analytics-System
 ```
 
 ---
@@ -206,7 +194,7 @@ jupyter notebook
 Open:
 
 ```bash
-covid_analysis.ipynb
+notebooks/covid_analysis.ipynb
 ```
 
 ---
@@ -214,11 +202,18 @@ covid_analysis.ipynb
 ### **4. Train Models**
 
 ```python
-from sklearn.ensemble import RandomForestRegressor
+from xgboost import XGBRegressor
 
-model = RandomForestRegressor(random_state=42)
-
+model = XGBRegressor(random_state=42)
 model.fit(X_train, y_train)
+```
+
+---
+
+### **5. Launch Dashboard**
+
+```bash
+python -m streamlit run app.py
 ```
 
 ---
@@ -227,36 +222,25 @@ model.fit(X_train, y_train)
 
 Healthcare analysts and policymakers can use this platform to:
 
-1. Monitor pandemic growth trends
-2. Forecast future outbreaks
-3. Analyze regional healthcare impact
-4. Support data-driven healthcare planning
-
----
-
-### **Interactive Application Deployment**
-
-The project features a fully institutionalized, multi-page **Streamlit Web Application** designed with glassmorphism CSS tokens, session state continuity, and high-fidelity interactive Plotly charts.
-
-#### **To Launch the Platform Locally:**
-```powershell
-python -m streamlit run ".\COVID-19 Predictive Analytics System\app.py"
-```
+1. Monitor real-time pandemic growth trends by country or region
+2. Forecast future case surges to plan healthcare capacity
+3. Analyze regional mortality and recovery rate disparities
+4. Support data-driven public health policy decisions
 
 ---
 
 ### **Future Improvements**
 
-* Real-time COVID API integration
-* Deep learning-based forecasting using LSTM
-* Geospatial outbreak mapping
-* Live healthcare analytics monitoring
+* Real-time COVID-19 API integration for live data updates
+* Deep learning-based forecasting using LSTM and Transformer models
+* Geospatial outbreak mapping using Folium or Kepler.gl
+* Vaccine distribution and efficacy analytics layer
 
 ---
 
 ### **Contributors**
 
-* **Jegadeesh D** — Data preprocessing, forecasting, machine learning, analytics, and visualization
+* **Jegadeesh D** — Data preprocessing, time-series feature engineering, machine learning forecasting, evaluation, and Streamlit dashboard development
 
 ---
 
