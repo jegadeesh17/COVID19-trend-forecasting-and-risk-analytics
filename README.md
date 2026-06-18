@@ -43,36 +43,16 @@ The system processes historical COVID-19 data, engineers advanced temporal featu
 ### **Project Structure**
 
 ```bash
-COVID-19-Predictive-Analytics-System/
+CovidPredictiveAnalytics/
 │
-├── data/
-│   ├── raw/                        # Original COVID-19 datasets
-│   └── processed/                  # Cleaned and feature-engineered data
-│
-├── models/                         # Saved trained ML models
-│
-├── notebooks/                      # Jupyter notebooks for EDA and modeling
-│
-├── reports/                        # Analytical reports
-│
-├── visualizations/                 # Output charts and plots
-│
-├── components/
-│   ├── cards.py                    # KPI card UI components
-│   ├── sidebar.py                  # Sidebar filter components
-│   └── visualizations.py          # Plotly chart components
-│
-├── src/
-│   ├── preprocessing.py            # Data cleaning and time-series formatting
-│   ├── feature_engineering.py      # Rolling averages, growth rates, lag features
-│   ├── modeling.py                 # Model training pipeline
-│   ├── evaluation.py               # Model evaluation metrics
-│   └── visualization.py           # Static visualization scripts
-│
-├── app.py                          # Multi-page Streamlit dashboard application
-├── config.py                       # Application configuration
-├── services.py                     # Data service layer
-├── requirements.txt               # Python dependencies
+├── app/                          # Streamlit application files
+│   └── app.py                    # Main Streamlit dashboard
+├── data/                         # Project datasets
+├── docs/                         # Documentation and visualizations
+├── models/                       # Saved trained models
+├── notebooks/                    # Jupyter notebooks (Source of Truth)
+├── src/                          # Core Python logic and scripts
+├── requirements.txt              # Python dependencies
 └── README.md
 ```
 
@@ -146,7 +126,7 @@ The project features a fully institutionalized, multi-page **Streamlit Web Appli
 
 #### **To Launch the Platform Locally:**
 ```powershell
-python -m streamlit run ".\COVID-19 Predictive Analytics System\app.py"
+streamlit run app/app.py
 ```
 
 ---
@@ -172,7 +152,7 @@ python -m streamlit run ".\COVID-19 Predictive Analytics System\app.py"
 ```bash
 git clone https://github.com/jegadeesh17/COVID19-Trend-Forecasting-and-Risk-Analytics.git
 
-cd COVID-19-Predictive-Analytics-System
+cd CovidPredictiveAnalytics
 ```
 
 ---
