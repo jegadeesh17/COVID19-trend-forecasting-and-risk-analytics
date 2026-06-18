@@ -3,7 +3,7 @@ import os
 APP_TITLE = "COVID-19 Predictive Analytics"
 APP_SUBTITLE = "Global Outbreak Intelligence & Forecasting Engine"
 
-BASE_DIR = os.path.dirname(__file__)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # File paths mapped to project workspace dynamically
 _csv_path = os.path.join(BASE_DIR, "data", "compact.csv")

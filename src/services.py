@@ -2,7 +2,7 @@ import os
 import joblib
 import streamlit as st
 import pandas as pd
-from config import DATA_PATH, FEATURES, TARGET, MODEL_DIR
+from src.config import DATA_PATH, FEATURES, TARGET, MODEL_DIR
 from src.preprocessing import preprocess_data
 from src.feature_engineering import create_features
 from src.modeling import train_models

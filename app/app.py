@@ -12,15 +12,18 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-from config import BASE_DIR, FEATURES
-from services import load_and_prep_data, load_cached_models
-from components.cards import display_kpi_row
-from components.visualizations import render_trend_chart, render_forecast_chart, render_model_comparison
+import sys
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
+from src.config import BASE_DIR, FEATURES
+from src.services import load_and_prep_data, load_cached_models
+from app.components.cards import display_kpi_row
+from app.components.visualizations import render_trend_chart, render_forecast_chart, render_model_comparison
 from src.modeling import forecast_global
 
 def inject_custom_css():
     """Inject styling parameters for customized glassmorphism metric containers."""
-    css_path = os.path.join(BASE_DIR, "assets", "custom_style.css")
+    css_path = os.path.join(BASE_DIR, "app", "assets", "custom_style.css")
     if os.path.exists(css_path):
         with open(css_path) as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
@@ -95,14 +98,14 @@ def main():
         
         st.divider()
         
-        # Interactive trajectory display using use_container_width natively
+        # Interactive trajectory display using width natively
         st.plotly_chart(
             render_trend_chart(view_df, title=f"Historical Case Tracking ({selected_country})"), 
-            use_container_width=True
+            width="stretch"
         )
         
         with st.expander("📁 Inspect Raw Data Snapshot"):
-            st.dataframe(view_df.tail(50), use_container_width=True)
+            st.dataframe(view_df.tail(50), width="stretch")
 
     # ==========================================
     # TAB 2: ML Trend Forecasting Engine
@@ -142,7 +145,7 @@ def main():
                 forecast_values=forecast_res['Predicted_New_Cases'],
                 model_name=active_model
             ),
-            use_container_width=True
+            width="stretch"
         )
         
         # Key statistical metrics breakdown
@@ -157,9 +160,9 @@ def main():
     # ==========================================
     with tab_eval:
         st.subheader("🧮 Model Benchmarking Comparison")
-        st.dataframe(results_df[['Model', 'R2 Score', 'RMSE', 'MAE']], use_container_width=True, hide_index=True)
+        st.dataframe(results_df[['Model', 'R2 Score', 'RMSE', 'MAE']], width="stretch", hide_index=True)
         
-        st.plotly_chart(render_model_comparison(results_df), use_container_width=True)
+        st.plotly_chart(render_model_comparison(results_df), width="stretch")
         
         st.divider()
         st.subheader("🔑 Explanatory Feature Importance Weights (XGBoost)")
@@ -180,7 +183,7 @@ def main():
                 title="Relative Impact of Epidemiological Variables on Case Growth"
             )
             fig.update_layout(template='plotly_dark', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
-            st.plotly_chart(fig, use_container_width=True)
+            st.plotly_chart(fig, width="stretch")
 
 if __name__ == "__main__":
     main()
