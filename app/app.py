@@ -17,8 +17,8 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from src.config import BASE_DIR, FEATURES
 from src.services import load_and_prep_data, load_cached_models
-from app.components.cards import display_kpi_row
-from app.components.visualizations import render_trend_chart, render_forecast_chart, render_model_comparison
+from components.cards import display_kpi_row
+from components.visualizations import render_trend_chart, render_forecast_chart, render_model_comparison
 from src.modeling import forecast_global
 
 def inject_custom_css():
