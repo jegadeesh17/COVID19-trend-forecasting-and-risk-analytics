@@ -4,6 +4,10 @@ import pandas as pd
 import plotly.express as px
 from datetime import timedelta
 
+import warnings
+from sklearn.exceptions import InconsistentVersionWarning
+warnings.filterwarnings("ignore", category=InconsistentVersionWarning)
+
 # Must be the first executed statement
 st.set_page_config(
     page_title="COVID-19 Predictive Analytics",
@@ -79,20 +83,26 @@ def main():
         st.subheader(f"📊 Outbreak Health Snapshot: **{selected_country}**")
         
         # Determine specific frame aggregations based on global context
+        # Build aggregation column list dynamically based on available columns
+        agg_cols = [c for c in ['new_cases', 'total_cases', 'new_deaths', 'total_deaths', 'cases_7d_avg'] if c in df.columns]
+        
         if selected_country == "Global":
-            view_df = df.groupby('date')[['new_cases', 'total_cases', 'new_deaths', 'total_deaths', 'cases_7d_avg']].sum().reset_index()
+            view_df = df.groupby('date')[agg_cols].sum().reset_index()
             latest = view_df.iloc[-1]
             growth_pct = df.groupby('date')['growth_rate'].mean().iloc[-1] * 100
-            mortality = (latest['total_deaths'] / latest['total_cases']) * 100 if latest['total_cases'] > 0 else 0.0
+            total_cases_val = latest.get('total_cases', 0)
+            total_deaths_val = latest.get('total_deaths', 0)
+            mortality = (total_deaths_val / total_cases_val) * 100 if total_cases_val > 0 else 0.0
         else:
             view_df = df[df['country'] == selected_country].sort_values('date')
             latest = view_df.iloc[-1]
-            growth_pct = latest['growth_rate'] * 100
-            mortality = latest['mortality_rate'] * 100
+            growth_pct = latest.get('growth_rate', 0) * 100
+            mortality = latest.get('mortality_rate', 0) * 100
+            total_cases_val = latest.get('total_cases', 0)
             
         # Display metric block array
         display_kpi_row(
-            total_cases=latest['total_cases'],
+            total_cases=total_cases_val,
             mortality_pct=mortality
         )
         
@@ -124,17 +134,20 @@ def main():
             index=model_opts.index("XGBoost") if "XGBoost" in model_opts else 0
         )
         
+        # Use country-specific data if a country is selected, otherwise use global df
+        forecast_input_df = df if selected_country == "Global" else df[df['country'] == selected_country].sort_values('date')
+        
         # Execute recursive iteration
         forecast_res = forecast_global(
             model=trained_models[active_model],
-            df=df,
+            df=forecast_input_df,
             features=FEATURES,
             scaler=scaler,
             days=forecast_days
         )
         
         # Construct connected visualization historical bounds
-        hist_agg = df.groupby('date')['new_cases'].sum().reset_index().sort_values('date')
+        hist_agg = forecast_input_df.groupby('date')['new_cases'].sum().reset_index().sort_values('date')
         hist_tail = hist_agg.tail(60)
         
         st.plotly_chart(

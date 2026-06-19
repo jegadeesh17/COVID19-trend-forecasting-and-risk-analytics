@@ -13,7 +13,7 @@ MODEL_DIR = os.path.join(BASE_DIR, "models")
 
 # Model Input Features
 FEATURES = [
-    'total_cases', 'cases_7d_avg', 'deaths_7d_avg', 'growth_rate', 
+    'total_cases_lag1', 'cases_7d_avg', 'deaths_7d_avg', 'growth_rate', 
     'mortality_rate', 'month', 'week', 'lag_1', 'lag_7', 
     'population_density', 'gdp_per_capita', 'diabetes_prevalence'
 ]
