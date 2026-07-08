@@ -10,9 +10,14 @@ venv/
 env/
 
 # Dataset files
+data/cleaned_covid_data.parquet
+data/compact.csv.gz
+data/compact.csv
+!data/compact_sample.csv
+!data/cleaned_covid_data_sample.parquet
 *.csv
 *.xlsx
-!data/compact.csv.gz
+!data/compact_sample.csv
 
 # Model files
 *.pkl

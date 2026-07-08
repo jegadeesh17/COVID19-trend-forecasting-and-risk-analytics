@@ -6,9 +6,19 @@ APP_SUBTITLE = "Global Outbreak Intelligence & Forecasting Engine"
 BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 
 # File paths mapped to project workspace dynamically
-_csv_path = os.path.join(BASE_DIR, "data", "compact.csv")
-_gz_path = os.path.join(BASE_DIR, "data", "compact.csv.gz")
-DATA_PATH = _csv_path if os.path.exists(_csv_path) else _gz_path
+_data_dir = os.path.join(BASE_DIR, "data")
+
+def _first_existing(*paths):
+    for path in paths:
+        if os.path.exists(path):
+            return path
+    return paths[-1]
+
+DATA_PATH = _first_existing(
+    os.path.join(_data_dir, "compact.csv"),
+    os.path.join(_data_dir, "compact.csv.gz"),
+    os.path.join(_data_dir, "compact_sample.csv"),
+)
 MODEL_DIR = os.path.join(BASE_DIR, "models")
 
 # Model Input Features

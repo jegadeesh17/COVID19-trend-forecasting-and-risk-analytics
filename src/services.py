@@ -3,7 +3,7 @@ import json
 import joblib
 import streamlit as st
 import pandas as pd
-from src.config import DATA_PATH, FEATURES, TARGET, MODEL_DIR, BASE_DIR
+from src.config import DATA_PATH, FEATURES, TARGET, MODEL_DIR, BASE_DIR, _first_existing
 from src.preprocessing import preprocess_data
 from src.feature_engineering import create_features
 from src.modeling import train_models
@@ -11,7 +11,10 @@ from src.modeling import train_models
 @st.cache_data(show_spinner="Accessing clean health records cache...")
 def load_and_prep_data():
     """Load data bundle, interpolate missing points, and construct dynamic lag features."""
-    parquet_path = os.path.join(BASE_DIR, "data", "cleaned_covid_data.parquet")
+    parquet_path = _first_existing(
+        os.path.join(BASE_DIR, "data", "cleaned_covid_data.parquet"),
+        os.path.join(BASE_DIR, "data", "cleaned_covid_data_sample.parquet"),
+    )
 
     # Fast path: load compiled columnar data if available
     if os.path.exists(parquet_path):
