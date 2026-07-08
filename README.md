@@ -26,6 +26,8 @@ The system processes historical COVID-19 data, engineers advanced temporal featu
 ### **Dataset**
 
 * **Source:** Global COVID-19 Dataset
+* **In repo:** `data/compact_sample.csv`, `data/cleaned_covid_data_sample.parquet`
+* **Full data:** Place `compact.csv` (or `compact.csv.gz`) in `data/` — see [data/DATA_SETUP.md](data/DATA_SETUP.md)
 * **Coverage:** Worldwide pandemic statistics by country and date
 * **Data Type:** Time-series healthcare and epidemiological data
 

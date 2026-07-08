@@ -38,8 +38,9 @@ data/compact.csv
 
 # Deployment logs
 logs-*.txt
-# Logs
-logs-*.txt
+
+# Regenerable notebook exports
+docs/*.html
 
 # Documents
 *.docx
