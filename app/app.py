@@ -111,11 +111,11 @@ def main():
         # Interactive trajectory display using width natively
         st.plotly_chart(
             render_trend_chart(view_df, title=f"Historical Case Tracking ({selected_country})"), 
-            width="stretch"
+            use_container_width=True
         )
         
         with st.expander("📁 Inspect Raw Data Snapshot"):
-            st.dataframe(view_df.tail(50), width="stretch")
+            st.dataframe(view_df.tail(50), use_container_width=True)
 
     # ==========================================
     # TAB 2: ML Trend Forecasting Engine
@@ -158,7 +158,7 @@ def main():
                 forecast_values=forecast_res['Predicted_New_Cases'],
                 model_name=active_model
             ),
-            width="stretch"
+            use_container_width=True
         )
         
         # Key statistical metrics breakdown
@@ -173,9 +173,9 @@ def main():
     # ==========================================
     with tab_eval:
         st.subheader("🧮 Model Benchmarking Comparison")
-        st.dataframe(results_df[['Model', 'R2 Score', 'RMSE', 'MAE']], width="stretch", hide_index=True)
+        st.dataframe(results_df[['Model', 'R2 Score', 'RMSE', 'MAE']], use_container_width=True, hide_index=True)
         
-        st.plotly_chart(render_model_comparison(results_df), width="stretch")
+        st.plotly_chart(render_model_comparison(results_df), use_container_width=True)
         
         st.divider()
         st.subheader("🔑 Explanatory Feature Importance Weights (XGBoost)")
@@ -196,7 +196,7 @@ def main():
                 title="Relative Impact of Epidemiological Variables on Case Growth"
             )
             fig.update_layout(template='plotly_dark', paper_bgcolor='rgba(0,0,0,0)', plot_bgcolor='rgba(0,0,0,0)')
-            st.plotly_chart(fig, width="stretch")
+            st.plotly_chart(fig, use_container_width=True)
 
 if __name__ == "__main__":
     main()
